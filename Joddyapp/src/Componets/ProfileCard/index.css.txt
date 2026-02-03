@@ -1,0 +1,43 @@
+.ProfileCard1 {
+  background-image: url('https://assets.ccbp.in/frontend/react-js/profile-bg.png');
+  background-size: cover;
+  background-position: center;
+  width: 200px;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+  gap: 12px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.profileimg {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  border: 2px solid #b6c5ff;
+  object-fit: cover;
+  margin-bottom: 5px;
+}
+
+.profilename {
+  font-size: 16px;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  color: #202020;
+  margin: 0;
+  text-align: center;
+}
+
+.profilepara {
+  font-size: 12px;
+  font-family: 'Roboto', sans-serif;
+  color: #202020;
+  text-align: center;
+  line-height: 1.4;
+  max-width: 90%;
+  margin: 0;
+}

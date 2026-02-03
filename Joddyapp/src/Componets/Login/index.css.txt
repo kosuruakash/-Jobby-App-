@@ -1,0 +1,87 @@
+.login-form-container {
+  background-color: black;
+  min-height: 100vh;
+  max-width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Improved form layout */
+.login-small-form {
+  background-color: #64748b;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  padding: 40px 30px;
+  width: 320px;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.15);
+}
+
+/* Logo styling */
+.login-image {
+  width: 100px;
+  margin-bottom: 20px;
+}
+
+/* Input wrapper */
+.input-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+/* Labels */
+.input-label {
+  color: #ffffff;
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+  margin-bottom: 5px;
+}
+
+/* Input fields */
+.username-input-filed,
+.password-input-filed {
+  height: 36px;
+  border: 1px solid #f8fafc;
+  border-radius: 5px;
+  padding: 0 10px;
+  font-size: 14px;
+  color: #000000;
+  outline: none;
+}
+
+.username-input-filed:focus,
+.password-input-filed:focus {
+  border-color: #b6c5ff;
+  background-color: #f8fafc;
+}
+
+/* Button styling */
+.login-button {
+  background-color: #b6c5ff;
+  width: 100%;
+  height: 36px;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  color: #000000;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #a5b8ff;
+}
+
+/* Error message */
+.error-message {
+  color: #ffb3b3;
+  font-size: 14px;
+  margin-top: 8px;
+  align-self: flex-start;
+}

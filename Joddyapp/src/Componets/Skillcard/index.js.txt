@@ -1,0 +1,18 @@
+import './index.css'
+
+const Skillcard = props => {
+  const {skill} = props
+  const {skillimageurl, name} = skill
+  return (
+    <li className="lii">
+      <img
+        src={skillimageurl}
+        alt={name}
+        className="similar job company logo"
+      />
+      <h1 className="para1">{name}</h1>
+    </li>
+  )
+}
+
+export default Skillcard

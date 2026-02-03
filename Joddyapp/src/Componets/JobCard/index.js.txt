@@ -1,0 +1,59 @@
+import {AiFillStar} from 'react-icons/ai'
+import {IoLocationSharp} from 'react-icons/io5'
+import {BsFillBriefcaseFill} from 'react-icons/bs'
+import {Link} from 'react-router-dom'
+import './index.css'
+
+const JobCard = props => {
+  const {job} = props
+  const {
+    id,
+    companylogourl,
+    employmenttype,
+    jobdescription,
+    rating,
+    packageperannum,
+    title,
+    location,
+  } = job
+
+  return (
+    <Link to={`/jobs/${id}`} className="item-link">
+      <li className="jobcard">
+        <div className="Comapany_name">
+          <img
+            src={companylogourl}
+            alt="company logo"
+            className="companylogo"
+          />
+          <div className="company">
+            <h1 className="para">{title}</h1>
+            <div className="rating">
+              <AiFillStar color="#fbbf24" />
+              <p className="p2">{rating}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="smallpoints">
+          <div className="point">
+            <IoLocationSharp color="#f8fafc" />
+            <p className="p2">{location}</p>
+          </div>
+          <div className="point">
+            <BsFillBriefcaseFill color="#f8fafc" />
+            <p className="p2">{employmenttype}</p>
+          </div>
+          <p className="p2">{packageperannum}</p>
+        </div>
+
+        <hr className="Line" />
+
+        <h1 className="para">Description</h1>
+        <p className="p2">{jobdescription}</p>
+      </li>
+    </Link>
+  )
+}
+
+export default JobCard

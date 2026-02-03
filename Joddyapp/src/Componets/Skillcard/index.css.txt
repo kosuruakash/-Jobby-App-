@@ -1,0 +1,18 @@
+.lii {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.imh2 {
+  width: 30px;
+}
+
+.para1 {
+  color: #f8fafc;
+  font-family: 'Roboto';
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+}

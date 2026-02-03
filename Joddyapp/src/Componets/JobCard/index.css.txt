@@ -1,0 +1,75 @@
+.item-link {
+  text-decoration: none;
+}
+.jobcard {
+  background-color: #7e858e;
+  max-width: 80%;
+  max-height: 15%;
+  border-style: solid;
+  border-radius: 8px;
+  padding: 15px;
+  border-width: 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.Comapany_name {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+}
+
+.companylogo {
+  height: 60px;
+  width: 60px;
+}
+
+.company {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.rating {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+.smallpoints {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.point {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+.Line {
+  color: #f8fafc;
+  border-style: solid;
+  border-width: 1px;
+  width: 100%;
+}
+
+.para {
+  color: #f8fafc;
+  font-family: 'Roboto';
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.p2 {
+  color: #f1f5f9;
+  font-size: 14px;
+  font-family: 'Roboto';
+}

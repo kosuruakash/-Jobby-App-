@@ -1,0 +1,106 @@
+import {Component} from 'react'
+import './index.css'
+
+const employmentTypesList = [
+  {label: 'Full Time', employmentTypeId: 'FULLTIME'},
+  {label: 'Part Time', employmentTypeId: 'PARTTIME'},
+  {label: 'Freelance', employmentTypeId: 'FREELANCE'},
+  {label: 'Internship', employmentTypeId: 'INTERNSHIP'},
+]
+
+const salaryRangesList = [
+  {salaryRangeId: '1000000', label: '10 LPA and above'},
+  {salaryRangeId: '2000000', label: '20 LPA and above'},
+  {salaryRangeId: '3000000', label: '30 LPA and above'},
+  {salaryRangeId: '4000000', label: '40 LPA and above'},
+]
+
+class FilterCard extends Component {
+  state = {
+    Showcurrentstausofemploye: employmentTypesList.reduce((acc, type) => {
+      acc[type.employmentTypeId] = false
+      return acc
+    }, {}),
+  }
+
+  handleChange = event => {
+    const {id, checked} = event.target
+    const {onChangefilter} = this.props
+
+    this.setState(
+      prevState => ({
+        Showcurrentstausofemploye: {
+          ...prevState.Showcurrentstausofemploye,
+          [id]: checked,
+        },
+      }),
+      () => {
+        onChangefilter(checked, id)
+      },
+    )
+  }
+
+  handleChangeSalary = event => {
+    const {id} = event.target
+    const {onSalryrange} = this.props
+    onSalryrange(id)
+  }
+
+  salaryRanges = () => (
+    <div className="filtersalryrange">
+      <h1 className="p33">Salary Range</h1>
+      <ul className="employment-list">
+        {salaryRangesList.map(Type => (
+          <li className="filtersalry2" key={Type.salaryRangeId}>
+            <input
+              type="radio"
+              id={Type.salaryRangeId}
+              name="SalaryRange"
+              value={Type.salaryRangeId}
+              onChange={this.handleChangeSalary}
+            />
+            <label htmlFor={Type.salaryRangeId} className="p33">
+              {Type.label}
+            </label>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+
+  employmentType = () => {
+    const {Showcurrentstausofemploye} = this.state
+    return (
+      <div className="filteremploye">
+        <h1 className="p33">Type of Employment</h1>
+        <ul className="employment-list">
+          {employmentTypesList.map(Type => (
+            <li key={Type.employmentTypeId}>
+              <input
+                type="checkbox"
+                id={Type.employmentTypeId}
+                checked={Showcurrentstausofemploye[Type.employmentTypeId]}
+                onChange={this.handleChange}
+              />
+              <label htmlFor={Type.employmentTypeId} className="p33">
+                {Type.label}
+              </label>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  render() {
+    return (
+      <div className="FilterGroup">
+        {this.employmentType()}
+        <hr className="Line" />
+        {this.salaryRanges()}
+      </div>
+    )
+  }
+}
+
+export default FilterCard

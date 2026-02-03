@@ -1,0 +1,207 @@
+import {Component} from 'react'
+import Cookies from 'js-cookie'
+import Loader from 'react-loader-spinner'
+import {AiFillStar} from 'react-icons/ai'
+import {IoLocationSharp} from 'react-icons/io5'
+import {BsFillBriefcaseFill} from 'react-icons/bs'
+import Header from '../Header/index'
+import Skillcard from '../Skillcard/index'
+import Similarjobs from '../Similarjobs'
+
+import './index.css'
+
+const apiStatusConstants = {
+  initial: 'INITIAL',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+  inProgress: 'IN_PROGRESS',
+}
+
+class Jobdetails extends Component {
+  state = {
+    jobdetails: {},
+    apiStatus: apiStatusConstants.initial,
+  }
+
+  componentDidMount() {
+    this.getJobDetails()
+  }
+
+  getSkillFormatted = skill => ({
+    skillimageurl: skill.image_url,
+    name: skill.name,
+  })
+
+  getSimilarJobFormatted = similarJob => ({
+    companylogourl: similarJob.company_logo_url,
+    employmenttype: similarJob.employment_type,
+    id: similarJob.id,
+    jobdescription: similarJob.job_description,
+    location: similarJob.location,
+    rating: similarJob.rating,
+    title: similarJob.title,
+  })
+
+  getJobDetails = async () => {
+    this.setState({apiStatus: apiStatusConstants.inProgress})
+    const jwtToken = Cookies.get('jwt_token')
+    const {match} = this.props
+    const {params} = match
+    const {id} = params
+
+    const apiUrl = `https://apis.ccbp.in/jobs/${id}`
+    const options = {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+      method: 'GET',
+    }
+
+    const response = await fetch(apiUrl, options)
+    if (response.ok === true) {
+      const fetchedData = await response.json()
+      const job = fetchedData.job_details
+      const updatedData = {
+        companylogourl: job.company_logo_url,
+        employmenttype: job.employment_type,
+        id: job.id,
+        companywebsiteurl: job.company_website_url,
+        jobdescription: job.job_description,
+        skills: job.skills.map(each => this.getSkillFormatted(each)),
+        lifeatcompany_description: job.life_at_company.description,
+        lifeatcompany_imageurl: job.life_at_company.image_url,
+        location: job.location,
+        packageperannum: job.package_per_annum,
+        rating: job.rating,
+        title: job.title,
+        similarjobs: fetchedData.similar_jobs.map(each =>
+          this.getSimilarJobFormatted(each),
+        ),
+      }
+
+      this.setState({
+        jobdetails: updatedData,
+        apiStatus: apiStatusConstants.success,
+      })
+    } else {
+      this.setState({apiStatus: apiStatusConstants.failure})
+    }
+  }
+
+  renderJobList = () => {
+    const {jobdetails} = this.state
+    return (
+      <div className="jobdeatils">
+        <div className="jobcard">
+          <div className="Comapany_name">
+            <img
+              src={jobdetails.companylogourl}
+              alt="job details company logo"
+              className="companylogo"
+            />
+            <div className="company">
+              <h1 className="para">{jobdetails.title}</h1>
+              <div className="rating">
+                <AiFillStar color="#fbbf24" />
+                <p className="p2">{jobdetails.rating}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="smallpoints">
+            <div className="point">
+              <IoLocationSharp color="#f8fafc" />
+              <p className="p2">{jobdetails.location}</p>
+            </div>
+            <div className="point">
+              <BsFillBriefcaseFill color="#f8fafc" />
+              <p className="p2">{jobdetails.employmenttype}</p>
+            </div>
+            <p className="p2">{jobdetails.packageperannum}</p>
+          </div>
+
+          <hr className="Line" />
+          <div className="description">
+            <div className="h44">
+              <h1 className="para">Description</h1>
+              <a
+                href={jobdetails.companywebsiteurl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Visit
+              </a>
+            </div>
+
+            <p className="p2">{jobdetails.jobdescription}</p>
+          </div>
+          <div className="skillssection">
+            <h1 className="para">Skills</h1>
+            <ul className="skillname">
+              {jobdetails.skills?.map(skill => (
+                <Skillcard skill={skill} key={skill.name} />
+              ))}
+            </ul>
+          </div>
+
+          <div className="job_description">
+            <h1 className="para">Life at Company</h1>
+            <div className="Jobdes">
+              <p className="p2">{jobdetails.lifeatcompany_description}</p>
+              <img
+                src={jobdetails.lifeatcompany_imageurl}
+                alt="life at company"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="similar_jobs">
+          <h1 className="para">Similar Jobs</h1>
+          <ul className="similarjobs">
+            {jobdetails.similarjobs?.map(similarjob => (
+              <Similarjobs similarjob={similarjob} key={similarjob.id} />
+            ))}
+          </ul>
+        </div>
+      </div>
+    )
+  }
+
+  renderJobFailureView = () => (
+    <img
+      src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
+      alt="failure view"
+      className="failure-image"
+    />
+  )
+
+  renderLoadingView = () => (
+    <div className="products-loader-container">
+      <Loader type="ThreeDots" color="#0b69ff" height="50" width="50" />
+    </div>
+  )
+
+  render() {
+    const {apiStatus} = this.state
+    return (
+      <>
+        <Header />
+        {(() => {
+          switch (apiStatus) {
+            case apiStatusConstants.success:
+              return this.renderJobList()
+            case apiStatusConstants.failure:
+              return this.renderJobFailureView()
+            case apiStatusConstants.inProgress:
+              return this.renderLoadingView()
+            default:
+              return null
+          }
+        })()}
+      </>
+    )
+  }
+}
+
+export default Jobdetails
